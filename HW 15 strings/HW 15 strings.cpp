@@ -1,4 +1,8 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
+
+
 
 using namespace std;
 
@@ -30,6 +34,14 @@ void analyze_array(char* arr);
 //7
 
 void change_spaces_to_tabs(char* arr);
+
+//8
+
+int number_of_words(char* arr);
+
+//9
+
+bool isPalindrom(const char* arr);
 
 int main()
 {
@@ -80,11 +92,30 @@ int main()
 
     //7 
     
-    char* arr7 = new char[] {"aaa123rsd2s3a !a%l6r%la4relaa a a a!"};
+    
+    char* arr7 = new char[] {"aaa123rsd2s3a !a%l6r%la4rela a a!"};
     cout << arr7 << endl;
     change_spaces_to_tabs(arr7);
     cout << arr7 << endl;
     delete[] arr7;
+
+    //8 
+    char* arr8 = new char[] {"Hello my dear friends!"};
+    cout << "Number of words in '" << arr8 << "' is " << number_of_words(arr8) << endl;
+    delete[] arr8;
+
+
+    //9
+
+    if (isPalindrom("Never odd or even"))
+    {
+        cout << "Its palindrom!";
+    }
+    else
+    {
+        cout << "Its not palindrom!";
+    }
+
 
 }
 
@@ -177,12 +208,70 @@ void analyze_array(char* arr)
 //7 
 void change_spaces_to_tabs(char* arr)
 {
-    while(*arr != '\0')
+    for (int i = 0; i < strlen(arr); i++)
+        if (*(arr + i) == ' ')
+            *(arr + i) = '\t';
+
+}
+
+//8
+
+int number_of_words(char* arr)
+{
+    int number = 1;
+    for (int i = 0; i < strlen(arr); i++)
     {
-        if (*arr == ' ')
-        {
-            *arr == '\t';
-        }
-        arr++;
+        if (*(arr + i) == ' ')
+            number++;
     }
+    return number;
+}
+
+//9 
+
+bool isPalindrom(const char* arr)
+{
+    // make string without spaces
+    char* tmp1 = new char[strlen(arr) + 1];
+    int j = 0;
+    for (int i = 0; i < strlen(arr); i++)
+    {
+        if (*(arr + i) != ' ')
+        {
+            *(tmp1 + j) = *(arr + i);
+            j++;
+        }
+        
+    }
+    *(tmp1 + j) = '\0';
+    _strlwr(tmp1);
+    // make reversed string without spaces
+
+    char tmp2[256];
+    int size = strlen(tmp1);
+    tmp2[size] = '\0';
+    j = 0;
+    char* tmp3 = tmp1;
+    while (*tmp3 != '\0')
+    {
+        tmp2[--size] = *tmp3;
+        tmp3++;
+    }
+    _strlwr(tmp2);
+
+    // testing palindrom or not
+    for (int i = 0; i < strlen(tmp1); i++)
+    {
+        if (*(tmp1 + i) != *(tmp2 + i))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
+
+    
 }
